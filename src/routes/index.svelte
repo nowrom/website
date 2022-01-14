@@ -79,9 +79,9 @@
 						<h2 id={rom.id}>{rom.name}</h2>
 						<p>{rom.about}</p>
 						<ul>
-							<li><a href={rom.website}>Website</a></li>
-							<li><a href={rom.wiki}>Wiki</a></li>
-							<li><a href={rom.download}>Download</a></li>
+							<li><a href={rom.website} target="_blank">Website</a></li>
+							<li><a href={rom.wiki} target="_blank">Wiki</a></li>
+							<li><a href={rom.download} target="_blank">Download</a></li>
 						</ul>
 					</div>
 				{/each}
