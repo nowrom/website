@@ -1,0 +1,144 @@
+<script lang="ts" context="module">
+	import type { ROMTypes } from '../types';
+	import Fuse from 'fuse.js';
+	import { onMount } from 'svelte';
+	import SvelteSeo from 'svelte-seo';
+
+	export async function load({ params, fetch, session, stuff }) {
+		const data = await fetch('https://nowrom.deno.dev/').then((r) => r.json());
+		const roms = await fetch('https://nowrom.deno.dev/roms').then((r) => r.json());
+		return {
+			props: {
+				devices: data,
+				roms: roms
+			}
+		};
+	}
+</script>
+
+<script lang="ts">
+	export let devices: ROMTypes[];
+	export let roms = [];
+	let searchResults = [...devices];
+	const search = new Fuse(devices, {
+		keys: [
+			'brand',
+			'codename',
+			{
+				name: 'name',
+				weight: 2
+			}
+		]
+	});
+	let toSearch = '';
+	function updateSearch() {
+		let r = search.search(toSearch);
+		searchResults.length = 0;
+		if (toSearch == '') {
+			searchResults.push(...devices);
+		} else {
+			searchResults.push(...r.map((x) => x.item));
+		}
+	}
+	onMount(() => {
+		let searchParams = new URLSearchParams(window.location.search);
+		toSearch = searchParams.get('search') || '';
+		updateSearch();
+	});
+</script>
+
+<SvelteSeo
+	title="nowrom"
+	description="The easiest way to find a rom to suit your needs"
+	openGraph={{
+		title: 'nowrom',
+		description: 'The easiest way to find a rom to suit your needs',
+		// url: 'https://www.example.com/page',
+		type: 'website'
+	}}
+	twitter={{
+		// site: "@username",
+		title: 'nowrom',
+		description: 'The easiest way to find a rom to suit your needs'
+		// image: "https://www.example.com/images/cover.jpg",
+		// imageAlt: "Alt text for the card!",
+	}}
+/>
+
+<div class="mx-auto bg-gradient-to-b from-teal-700 to-teal-900">
+	<div class="flex">
+		<div>
+			<div class="grid gap-2 py-4">
+				<div class="bg-teal-100 p-4 rounded-md border-4 border-teal-100 prose prose-teal">
+					<strong>nowrom</strong> is a opensource project useful for finding compatible roms for
+					your android device you can view the source code
+					<a href="https://github.com/nowrom/website">here</a>
+				</div>
+				{#each roms as rom}
+					<div class="bg-teal-100 p-4 rounded-md border-4 border-teal-100 prose prose-teal">
+						<h2 id={rom.id}>{rom.name}</h2>
+						<p>{rom.about}</p>
+						<ul>
+							<li><a href={rom.website}>Website</a></li>
+							<li><a href={rom.wiki}>Wiki</a></li>
+							<li><a href={rom.download}>Download</a></li>
+						</ul>
+					</div>
+				{/each}
+			</div>
+		</div>
+
+		<div class="max-w-full w-[80rem] p-4">
+			<input
+				class="focus:border-teal-900 focus:rounded-md focus:outline-none text-neutral-900 text-lg border-2 border-teal-300 p-4 rounded-sm w-full bg-teal-200"
+				placeholder="Search"
+				bind:value={toSearch}
+				on:input={() => {
+					//Theres probably a better way to do this but idk how /shrug
+					if (toSearch !== '') {
+						const searchParams = new URLSearchParams(window.location.search);
+						searchParams.set('search', toSearch);
+						const newLoc = new URL(window.location.toString());
+						newLoc.search = searchParams.toString();
+						window.history.pushState({}, null, newLoc);
+					} else {
+						const newLoc = new URL(window.location.toString());
+						newLoc.search = '';
+						window.history.pushState({}, null, newLoc);
+					}
+
+					updateSearch();
+				}}
+			/>
+			<div
+				class="py-4 grid md:grid-cols-3 lg:md:grid-cols-5 sm:md:grid-cols-2 gap-1 justify-evenly"
+			>
+				{#if searchResults.length == 0}
+					<div class="bg-teal-100 p-4 rounded-md border-4 border-teal-100 prose prose-teal">
+						<p>No results to display</p>
+					</div>
+				{:else}
+					{#each searchResults as rom}
+						<div class="bg-teal-100 p-4 rounded-md border-4 border-teal-100 prose prose-teal">
+							<h3>{rom.name}</h3>
+							<p class="text-teal-700">
+								Brand: {rom.brand}
+								<br />
+
+								Codename: {rom.codename}
+							</p>
+							<p class="text-sm">
+								Supported roms: {#each rom.roms as rom}
+									<a href={`#${rom.id}`}>{rom.id}</a>,{' '}
+								{/each}
+							</p>
+						</div>
+					{/each}
+				{/if}
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+</style>
