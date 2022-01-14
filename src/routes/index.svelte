@@ -66,8 +66,8 @@
 />
 
 <div class="mx-auto bg-gradient-to-b from-teal-700 to-teal-900">
-	<div class="flex">
-		<div>
+	<div class="md:flex">
+		<div class="md:p-0 p-4">
 			<div class="grid gap-2 py-4">
 				<div class="bg-teal-100 p-4 rounded-md border-4 border-teal-100 prose prose-teal">
 					<strong>nowrom</strong> is a opensource project useful for finding compatible roms for
