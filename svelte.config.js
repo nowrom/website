@@ -1,4 +1,5 @@
-import adapter from 'svelte-adapter-deno';
+import adapter from '@sveltejs/adapter-cloudflare';
+
 import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -8,11 +9,7 @@ const config = {
 	preprocess: [preprocess({})],
 
 	kit: {
-		adapter: adapter({
-			// default options are shown
-			out: 'build',
-			deps: './deps.ts' // (relative to adapter-deno package)
-		}),
+		adapter: adapter(),
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte'
 	}
