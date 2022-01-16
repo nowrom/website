@@ -133,12 +133,12 @@
 				{:else}
 					{#each searchResults as rom}
 						<div class="bg-teal-100 p-4 rounded-md border-4 border-teal-100 prose prose-teal">
-							<h3>{rom.name}</h3>
+							<h3>{rom.name || 'Unknown'}</h3>
 							<p class="text-teal-700">
-								Brand: {rom.brand}
+								Brand: {rom.brand || 'Unknown'}
 								<br />
 
-								Codename: {rom.codename}
+								Codename: {rom.codename || 'Unknown'}
 							</p>
 							<p class="text-sm">
 								Supported roms: {#each rom.roms as rom}
