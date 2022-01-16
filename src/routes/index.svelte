@@ -69,10 +69,22 @@
 	<div class="md:flex">
 		<div class="md:p-0 p-4">
 			<div class="grid gap-2 py-4">
-				<div class="bg-teal-100 p-4 rounded-md border-4 border-teal-100 prose prose-teal">
-					<strong>nowrom</strong> is a opensource project useful for finding compatible roms for
-					your android device you can view the source code
-					<a href="https://github.com/nowrom/website">here</a>
+				<div
+					class="bg-teal-100 p-1 rounded-md border-4 border-teal-100 prose prose-teal grid gap-1"
+				>
+					<div class="p-2 rounded-md bg-teal-200">
+						<strong>nowrom</strong> is a opensource project useful for finding compatible roms for
+						your android device you can view the source code
+						<a href="https://github.com/nowrom/website">here</a>
+					</div>
+					<div class="p-2 rounded-md bg-teal-200">
+						For a the repo that contains all roms etc visit <a
+							href="https://github.com/nowrom/devices">this</a
+						>
+					</div>
+					<div class="p-2 rounded-md bg-teal-200 md:hidden">
+						<a href="#search">Jump to search</a>
+					</div>
 				</div>
 				{#each roms as rom}
 					<div class="bg-teal-100 p-4 rounded-md border-4 border-teal-100 prose prose-teal">
@@ -91,6 +103,7 @@
 		<div class="max-w-full w-[80rem] p-4">
 			<input
 				class="focus:border-teal-900 focus:rounded-md focus:outline-none text-neutral-900 text-lg border-2 border-teal-300 p-4 rounded-sm w-full bg-teal-200"
+				id="search"
 				placeholder="Search"
 				bind:value={toSearch}
 				on:input={() => {
