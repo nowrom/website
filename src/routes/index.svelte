@@ -31,18 +31,25 @@
 		]
 	});
 	let toSearch = '';
+	let brand = '';
 	function updateSearch() {
 		let r = search.search(toSearch);
 		searchResults.length = 0;
+		let t;
 		if (toSearch == '') {
-			searchResults.push(...devices);
+			t = [...devices];
 		} else {
-			searchResults.push(...r.map((x) => x.item));
+			t = [...r.map((x) => x.item)];
 		}
+		if (brand !== '') {
+			t = t.filter((x) => x.brand?.toLowerCase() === brand.toLowerCase());
+		}
+		searchResults.push(...t);
 	}
 	onMount(() => {
 		let searchParams = new URLSearchParams(window.location.search);
 		toSearch = searchParams.get('search') || '';
+		toSearch = searchParams.get('brand') || '';
 		updateSearch();
 	});
 </script>
@@ -53,15 +60,11 @@
 	openGraph={{
 		title: 'nowrom',
 		description: 'The easiest way to find a rom to suit your needs',
-		// url: 'https://www.example.com/page',
 		type: 'website'
 	}}
 	twitter={{
-		// site: "@username",
 		title: 'nowrom',
 		description: 'The easiest way to find a rom to suit your needs'
-		// image: "https://www.example.com/images/cover.jpg",
-		// imageAlt: "Alt text for the card!",
 	}}
 />
 
@@ -111,46 +114,72 @@
 						<a href="#search">Jump to search</a>
 					</div>
 				</div>
-				{#each roms as rom}
-					<div class="bg-teal-100 p-4 rounded-md border-4 border-teal-100 prose prose-teal">
-						<h2 id={rom.id}>{rom.name}</h2>
-						<p>{rom.about}</p>
-						<ul>
-							<li><a href={rom.website} target="_blank">Website</a></li>
-							<li><a href={rom.wiki} target="_blank">Wiki</a></li>
-							<li><a href={rom.download} target="_blank">Download</a></li>
-						</ul>
+				<details class=" bg-teal-200 rounded-md border-4 border-teal-200 p-0">
+					<summary class="p-4">Display roms</summary>
+					<div class="grid gap-4">
+						{#each roms as rom}
+							<div class="bg-teal-100 rounded-md border-4 p-4 border-teal-100 prose prose-teal">
+								<h2 id={rom.id}>{rom.name}</h2>
+								<p>{rom.about}</p>
+								<ul>
+									<li><a href={rom.website} target="_blank">Website</a></li>
+									<li><a href={rom.wiki} target="_blank">Wiki</a></li>
+									<li><a href={rom.download} target="_blank">Download</a></li>
+								</ul>
+							</div>
+						{/each}
 					</div>
-				{/each}
+				</details>
 			</div>
 		</div>
 
 		<div class="max-w-full w-[80rem] p-4">
-			<input
-				class="focus:border-teal-900 focus:rounded-md focus:outline-none text-neutral-900 text-lg border-2 border-teal-300 p-4 rounded-sm w-full bg-teal-200"
-				id="search"
-				placeholder="Search"
-				bind:value={toSearch}
-				on:input={() => {
-					//Theres probably a better way to do this but idk how /shrug
-					if (toSearch !== '') {
-						const searchParams = new URLSearchParams(window.location.search);
-						searchParams.set('search', toSearch);
-						const newLoc = new URL(window.location.toString());
-						newLoc.search = searchParams.toString();
-						window.history.pushState({}, null, newLoc);
-					} else {
-						const newLoc = new URL(window.location.toString());
-						newLoc.search = '';
-						window.history.pushState({}, null, newLoc);
-					}
+			<div class="md:flex gap-2">
+				<input
+					class="focus:border-teal-900 focus:rounded-md focus:outline-none text-neutral-900 text-lg border-2 border-teal-300 p-4 rounded-sm w-full bg-teal-200"
+					id="search"
+					placeholder="Search"
+					bind:value={toSearch}
+					on:input={() => {
+						//Theres probably a better way to do this but idk how /shrug
+						if (brand !== '') {
+							const searchParams = new URLSearchParams(window.location.search);
+							searchParams.set('search', toSearch);
+							const newLoc = new URL(window.location.toString());
+							newLoc.search = searchParams.toString();
+							window.history.pushState({}, null, newLoc);
+						} else {
+							const newLoc = new URL(window.location.toString());
+							newLoc.search = '';
+							window.history.pushState({}, null, newLoc);
+						}
 
-					updateSearch();
-				}}
-			/>
-			<div
-				class="py-4 grid md:grid-cols-3 lg:md:grid-cols-5 sm:md:grid-cols-2 gap-1 justify-evenly"
-			>
+						updateSearch();
+					}}
+				/>
+				<input
+					class="focus:border-teal-900 focus:rounded-md focus:outline-none text-neutral-900 text-lg border-2 border-teal-300 p-4 rounded-sm md:w-96 w-full bg-teal-200"
+					placeholder="Brand"
+					bind:value={brand}
+					on:input={() => {
+						if (toSearch !== '') {
+							const searchParams = new URLSearchParams(window.location.search);
+							searchParams.set('brand', brand);
+							const newLoc = new URL(window.location.toString());
+							newLoc.search = searchParams.toString();
+							window.history.pushState({}, null, newLoc);
+						} else {
+							const newLoc = new URL(window.location.toString());
+							newLoc.search = '';
+							window.history.pushState({}, null, newLoc);
+						}
+
+						updateSearch();
+					}}
+				/>
+			</div>
+
+			<div class="py-4 grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-1 justify-evenly">
 				{#if searchResults.length == 0}
 					<div class="bg-teal-100 p-4 rounded-md border-4 border-teal-100 prose prose-teal">
 						<p>No results to display</p>
