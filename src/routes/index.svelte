@@ -82,6 +82,31 @@
 							href="https://github.com/nowrom/devices">this</a
 						>
 					</div>
+					<div
+						class="p-2 rounded-md bg-teal-200 prose hover:prose-a:text-green-400 focus:prose-a:text-sky-600"
+					>
+						<p class="font-bold">Invite the nowrom bot</p>
+						<ul dir="auto">
+							<li>
+								Telegram
+								<a href="https://t.me/NowromBot" rel="nofollow">@NowromBot</a>
+							</li>
+							<li>
+								Matrix
+								<a href="https://matrix.to/#/@nowrom:matrix.org" rel="nofollow"
+									>@nowrom:matrix.org</a
+								>
+							</li>
+							<li>
+								Discord
+								<a
+									href="https://discord.com/oauth2/authorize?client_id=890656612845518889&amp;permissions=117824&amp;scope=bot%20applications.commands"
+									rel="nofollow">NowRom</a
+								>
+							</li>
+						</ul>
+						<p class="font-semibold"><a href="https://github.com/nowrom/bot">Bot Source</a></p>
+					</div>
 					<div class="p-2 rounded-md bg-teal-200 md:hidden">
 						<a href="#search">Jump to search</a>
 					</div>
