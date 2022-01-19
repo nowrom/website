@@ -32,6 +32,7 @@
 	});
 	let toSearch = '';
 	let brand = '';
+	let count = 20;
 	function updateSearch() {
 		let r = search.search(toSearch);
 		searchResults.length = 0;
@@ -114,11 +115,11 @@
 						<a href="#search">Jump to search</a>
 					</div>
 				</div>
-				<details class=" bg-teal-200 rounded-md border-4 border-teal-200 p-0">
+				<details class="bg-teal-100 rounded-md border-4 border-teal-100 p-0">
 					<summary class="p-4">Display roms</summary>
 					<div class="grid gap-4">
 						{#each roms as rom}
-							<div class="bg-teal-100 rounded-md border-4 p-4 border-teal-100 prose prose-teal">
+							<div class="bg-teal-200 rounded-md border-4 p-4 border-teal-200 prose prose-teal">
 								<h2 id={rom.id}>{rom.name}</h2>
 								<p>{rom.about}</p>
 								<ul>
@@ -134,9 +135,9 @@
 		</div>
 
 		<div class="max-w-full w-[80rem] p-4">
-			<div class="md:flex gap-2">
+			<div class="flex md:flex-row flex-col gap-2">
 				<input
-					class="focus:border-teal-900 focus:rounded-md focus:outline-none text-neutral-900 text-lg border-2 border-teal-300 p-4 rounded-sm w-full bg-teal-200"
+					class="focus:border-teal-900 focus:rounded-md focus:outline-none text-neutral-900 text-lg border-2 border-teal-100 p-4 rounded-sm w-full bg-teal-200"
 					id="search"
 					placeholder="Search"
 					bind:value={toSearch}
@@ -158,7 +159,7 @@
 					}}
 				/>
 				<input
-					class="focus:border-teal-900 focus:rounded-md focus:outline-none text-neutral-900 text-lg border-2 border-teal-300 p-4 rounded-sm md:w-96 w-full bg-teal-200"
+					class="focus:border-teal-900 focus:rounded-md focus:outline-none text-neutral-900 text-lg border-2 border-teal-100 p-4 rounded-sm md:w-96 w-full bg-teal-200"
 					placeholder="Brand"
 					bind:value={brand}
 					on:input={() => {
@@ -185,8 +186,11 @@
 						<p>No results to display</p>
 					</div>
 				{:else}
-					{#each searchResults as rom}
-						<div class="bg-teal-100 p-4 rounded-md border-4 border-teal-100 prose prose-teal">
+					{#each count !== -1 ? [...searchResults].slice(0, count) : searchResults as rom, index (rom.codename)}
+						<div
+							id={rom.codename}
+							class="bg-teal-100 p-4 rounded-md border-4 border-teal-100 prose prose-teal"
+						>
 							<h3>{rom.name || 'Unknown'}</h3>
 							<p class="text-teal-700">
 								Brand: {rom.brand || 'Unknown'}
@@ -203,6 +207,22 @@
 					{/each}
 				{/if}
 			</div>
+			{#if !(count > searchResults.length || count < 0)}
+				<button
+					class="bg-teal-300 p-4 rounded-md border-4 border-teal-300 prose prose-teal hover:bg-teal-600 focus:bg-teal-600 hover:border-teal-600 focus:border-teal-600"
+					on:click={() => {
+						console.log(count);
+						count += 20;
+					}}>Show More</button
+				>
+				<button
+					class="bg-teal-300 p-4 rounded-md border-4 border-teal-300 prose prose-teal hover:bg-teal-600 focus:bg-teal-600 hover:border-teal-600 focus:border-teal-600"
+					on:click={() => {
+						count += -1 - count;
+						console.log(count);
+					}}>Show All</button
+				>
+			{/if}
 		</div>
 	</div>
 </div>
