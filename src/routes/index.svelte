@@ -208,7 +208,7 @@
 								{/each}
 							</p>
 							<div>
-								<a href={`/device/${rom.codename}`}>View device</a>
+								<a target="_blank" rel="noopener" href={`/device/${rom.codename}`}>View device</a>
 							</div>
 						</div>
 					{/each}
