@@ -111,6 +111,18 @@
 						</ul>
 						<p class="font-semibold"><a href="https://github.com/nowrom/bot">Bot Source</a></p>
 					</div>
+					<div class="p-2 rounded-md prose-teal prose bg-teal-200">
+						<details>
+							<summary>Contact me</summary>
+							<div class="">
+								<p>
+									Hello im tricked you can contact me via my email: tricked@tricked.pro<br />
+									for other ways to contact me please visit
+									<a rel="noopener" target="_blank" href="https://tricked.pro/en">my site</a> thanks!
+								</p>
+							</div>
+						</details>
+					</div>
 					<div class="p-2 rounded-md bg-teal-200 md:hidden">
 						<a href="#search">Jump to search</a>
 					</div>
