@@ -3,7 +3,7 @@
 	import Fuse from 'fuse.js';
 	import { onMount } from 'svelte';
 	import SvelteSeo from 'svelte-seo';
-
+	import Rom from '$lib/components/rom.svelte';
 	export async function load({ params, fetch, session, stuff }) {
 		const data = await fetch('https://nowrom.deno.dev/').then((r) => r.json());
 		const roms = await fetch('https://nowrom.deno.dev/roms').then((r) => r.json());
@@ -131,15 +131,7 @@
 					<summary class="p-4">Display roms</summary>
 					<div class="grid gap-4">
 						{#each roms as rom}
-							<div class="bg-teal-200 rounded-md border-4 p-4 border-teal-200 prose prose-teal">
-								<h2 id={rom.id}>{rom.name}</h2>
-								<p>{rom.about}</p>
-								<ul>
-									<li><a href={rom.website} target="_blank">Website</a></li>
-									<li><a href={rom.wiki} target="_blank">Wiki</a></li>
-									<li><a href={rom.download} target="_blank">Download</a></li>
-								</ul>
-							</div>
+							<Rom {rom} />
 						{/each}
 					</div>
 				</details>
@@ -201,7 +193,7 @@
 					{#each count !== -1 ? [...searchResults].slice(0, count) : searchResults as rom, index (rom.codename)}
 						<div
 							id={rom.codename}
-							class="bg-teal-100 p-4 rounded-md border-4 border-teal-100 prose prose-teal"
+							class="bg-teal-100 p-4 rounded-md border-4 border-teal-100 prose prose-teal flex flex-col"
 						>
 							<h3>{rom.name || 'Unknown'}</h3>
 							<p class="text-teal-700">
@@ -210,11 +202,14 @@
 
 								Codename: {rom.codename || 'Unknown'}
 							</p>
-							<p class="text-sm">
+							<p class="text-sm flex-grow">
 								Supported roms: {#each rom.roms as rom}
 									<a href={`#${rom.id}`}>{rom.id}</a>,{' '}
 								{/each}
 							</p>
+							<div>
+								<a href={`/device/${rom.codename}`}>View device</a>
+							</div>
 						</div>
 					{/each}
 				{/if}
