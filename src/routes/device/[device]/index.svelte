@@ -22,7 +22,7 @@
 		<h4 class="text-teal-300 text-xl">{device.codename}</h4>
 	</div>
 	<div class="flex justify-center max-w-[80rem] mx-auto gap-4 flex-col md:flex-row">
-		<div class="">
+		<div>
 			<div class="grid gap-2">
 				<div class="bg-teal-400 p-4 rounded-md border-teal-400 h-auto md:w-96">
 					<table class="relative">

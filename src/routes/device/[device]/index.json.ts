@@ -1,12 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export async function get({ params, locals, ...rest }) {
-	// console.log({
-	// 	params,
-	// 	locals,
-	// 	rest
-	// });
-	// console.log(rest);
+export async function get({ params }) {
 	const data = await fetch('https://nowrom.deno.dev/').then((r) => r.json());
 	const roms = await fetch('https://nowrom.deno.dev/roms').then((r) => r.json());
 	const device = params.device;
@@ -23,15 +17,10 @@ export async function get({ params, locals, ...rest }) {
 		};
 	});
 	device_data.roms = Object.values(obj);
-	// console.log({
-	// 	device,
-	// 	roms
-	// });
 	return {
 		body: {
 			device: device_data,
 			roms
 		}
 	};
-	return {};
 }

@@ -32,7 +32,7 @@
 	});
 	let toSearch = '';
 	let brand = '';
-	let count = 20;
+	let count = 200;
 	function updateSearch() {
 		let r = search.search(toSearch);
 		searchResults.length = 0;
