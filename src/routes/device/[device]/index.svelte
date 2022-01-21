@@ -2,12 +2,9 @@
 	import Rom from '$lib/components/rom.svelte';
 	export async function load({ params, fetch }) {
 		const { device: devicename } = params;
-		// await fetch(`/device/${devicename}.json`);
 		const device = await fetch(`/device/${devicename}.json`).then((r) => r.json());
-		// console.log(device);
 		return {
 			props: device
-			// props: {}
 		};
 	}
 </script>
@@ -49,7 +46,7 @@
 							</td>
 						</tr>
 						{#each device.roms as rom}
-							{#if rom.id == 'lineageos' || rom.id == 'lineages'}
+							{#if rom.id == 'lineageos'}
 								<tr>
 									<td>
 										<p>Ram</p>
@@ -64,25 +61,16 @@
 									</td>
 									<td>
 										<p>{rom.cpu}</p>
-									</td></tr
-								>
+									</td>
+								</tr>
 							{/if}
 						{/each}
 						<tr class="flex justify-center">
 							<td class="flex justify-center">
-								{#each device.roms as rom}
-									{#if rom.id == 'lineageos' || rom.id == 'lineages'}
-										<img
-											src={`https://cdn.statically.io/img/wiki.lineageos.org/images/devices/small/${device.codename}.png`}
-											alt=""
-										/>
-									{:else if rom?.photo && rom.id == 'pixelplusui'}
-										<img
-											src={`https://cdn.statically.io/img/ppui.site/${rom.photo.replace('./', '')}`}
-											alt=""
-										/>
-									{/if}
-								{/each}
+								<img
+									src={`https://nowrom.deno.dev/img/${device.codename.toLowerCase()}.png`}
+									alt=""
+								/>
 							</td>
 						</tr>
 					</table>
@@ -105,7 +93,7 @@
 									{rom.id}
 								</h4>
 								<div>
-									{#if rom.id == 'lineageos' || rom.id == 'lineages'}
+									{#if rom.id == 'lineageos'}
 										<p>
 											<a
 												class="text-fuchsia-600 hover:text-fuchsia-700 underline"
