@@ -16,15 +16,15 @@
 	export let roms: Roms[];
 </script>
 
-<div class="bg-teal-700 min-h-screen">
+<div class="bg-slate-700 min-h-screen">
 	<div class="flex p-4 gap-3">
-		<h1 class="text-teal-200 text-4xl">{device.name}</h1>
-		<h4 class="text-teal-300 text-xl">{device.codename}</h4>
+		<h1 class="text-slate-200 text-4xl">{device.name}</h1>
+		<h4 class="text-slate-300 text-xl">{device.codename}</h4>
 	</div>
 	<div class="flex justify-center max-w-[80rem] mx-auto gap-4 flex-col md:flex-row">
 		<div>
 			<div class="grid gap-2">
-				<div class="bg-teal-400 p-4 rounded-md border-teal-400 h-auto md:w-96">
+				<div class="bg-sky-800 p-4 rounded-md border-sky-800 h-auto md:w-96 text-stone-300">
 					<table class="relative">
 						<tr class="text-3xl">
 							<th class="m-auto">Device Info</th>
@@ -75,19 +75,19 @@
 						</tr>
 					</table>
 				</div>
-				<div class="bg-teal-400 p-4 rounded-md border-teal-400 h-auto ">
+				<div class="bg-sky-800 p-4 rounded-md border-sky-800 h-auto text-stone-300">
 					<a href="/" class="hover:text-fuchsia-700"> Back to search </a>
 				</div>
 			</div>
 		</div>
-		<div class="bg-teal-500 p-4 rounded-md border-teal-500 w-full">
+		<div class="bg-sky-700 p-4 rounded-md border-slate-500 w-full">
 			<div>
-				<h2 class="text-3xl text-teal-900">Roms</h2>
+				<h2 class="text-3xl text-slate-200">Roms</h2>
 				<div class="grid gap-2">
 					{#each device.roms as rom (rom.id)}
 						{@const romrom = roms.find((x) => x.id == rom.id)}
 
-						<details class="p-2 bg-teal-400 rounded-md">
+						<details class="p-2 bg-indigo-500 rounded-md">
 							<summary>
 								<h4 class="text-2xl">
 									{rom.id}

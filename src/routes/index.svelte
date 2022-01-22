@@ -69,25 +69,25 @@
 	}}
 />
 
-<div class="mx-auto bg-gradient-to-b from-teal-700 to-teal-900">
+<div class="mx-auto bg-gradient-to-b from-slate-700 to-slate-800">
 	<div class="md:flex">
 		<div class="md:p-0 p-4">
-			<div class="grid gap-2 py-4">
+			<div class="flex flex-col gap-2 py-4 text-white md:px-2">
 				<div
-					class="bg-teal-100 p-1 rounded-md border-4 border-teal-100 prose prose-teal grid gap-1"
+					class="md:max-w-xl w-full bg-slate-800 p-1 rounded-md border-4 border-slate-800 prose prose-invert grid gap-1"
 				>
-					<div class="p-2 rounded-md bg-teal-200">
+					<div class="p-2 rounded-md bg-slate-700 text-white">
 						<strong>nowrom</strong> is a opensource project useful for finding compatible roms for
 						your android device you can view the source code
 						<a href="https://github.com/nowrom/website">here</a>
 					</div>
-					<div class="p-2 rounded-md bg-teal-200">
+					<div class="p-2 rounded-md bg-slate-700">
 						For a the repo that contains all roms etc visit <a
 							href="https://github.com/nowrom/devices">this</a
 						>
 					</div>
 					<div
-						class="p-2 rounded-md bg-teal-200 prose hover:prose-a:text-green-400 focus:prose-a:text-sky-600"
+						class="p-2 rounded-md bg-slate-700 prose prose-invert hover:prose-a:text-gray-400 focus:prose-a:text-sky-600"
 					>
 						<p class="font-bold">Invite the nowrom bot</p>
 						<ul dir="auto">
@@ -111,7 +111,7 @@
 						</ul>
 						<p class="font-semibold"><a href="https://github.com/nowrom/bot">Bot Source</a></p>
 					</div>
-					<div class="p-2 rounded-md prose-teal prose bg-teal-200">
+					<div class="p-2 rounded-md prose-invert prose bg-slate-700">
 						<details>
 							<summary>Contact me</summary>
 							<div class="">
@@ -123,13 +123,13 @@
 							</div>
 						</details>
 					</div>
-					<div class="p-2 rounded-md bg-teal-200 md:hidden">
+					<div class="p-2 rounded-md bg-slate-800 md:hidden">
 						<a href="#search">Jump to search</a>
 					</div>
 				</div>
-				<details class="bg-teal-100 rounded-md border-4 border-teal-100 p-0">
-					<summary class="p-4">Display roms</summary>
-					<div class="grid gap-4">
+				<details class="md:max-w-xl bg-slate-800 rounded-md border-8 border-slate-800">
+					<summary class="p-2 bg-slate-700 rounded-md">Display roms</summary>
+					<div class="grid gap-4 py-2">
 						{#each roms as rom}
 							<Rom {rom} />
 						{/each}
@@ -141,7 +141,7 @@
 		<div class="max-w-full w-[80rem] p-4">
 			<div class="flex md:flex-row flex-col gap-2">
 				<input
-					class="focus:border-teal-900 focus:rounded-md focus:outline-none text-neutral-900 text-lg border-2 border-teal-100 p-4 rounded-sm w-full bg-teal-200"
+					class="focus:border-slate-900 focus:rounded-md focus:outline-none text-neutral-200 text-lg border-2 border-slate-500 p-4 rounded-sm w-full bg-slate-500"
 					id="search"
 					placeholder="Search"
 					bind:value={toSearch}
@@ -163,7 +163,7 @@
 					}}
 				/>
 				<input
-					class="focus:border-teal-900 focus:rounded-md focus:outline-none text-neutral-900 text-lg border-2 border-teal-100 p-4 rounded-sm md:w-96 w-full bg-teal-200"
+					class="text-white focus:border-slate-900 focus:rounded-md focus:outline-none text-lg border-2 border-slate-600 p-4 rounded-sm md:w-96 w-full bg-slate-600"
 					placeholder="Brand"
 					bind:value={brand}
 					on:input={() => {
@@ -186,17 +186,19 @@
 
 			<div class="py-4 grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-1 justify-evenly">
 				{#if searchResults.length == 0}
-					<div class="bg-teal-100 p-4 rounded-md border-4 border-teal-100 prose prose-teal">
+					<div
+						class="bg-slate-400 p-4 rounded-md border-4 border-slate-400 prose prose-invert prose-slate"
+					>
 						<p>No results to display</p>
 					</div>
 				{:else}
 					{#each count !== -1 ? [...searchResults].slice(0, count) : searchResults as rom, index (rom.codename)}
 						<div
 							id={rom.codename}
-							class="bg-teal-100 p-4 rounded-md border-4 border-teal-100 prose prose-teal flex flex-col"
+							class="text-white bg-slate-400 p-4 rounded-md border-4 border-slate-400 prose prose-invert flex flex-col"
 						>
 							<h3>{rom.name || 'Unknown'}</h3>
-							<p class="text-teal-700">
+							<p class="text-zinc-200">
 								Brand: {rom.brand || 'Unknown'}
 								<br />
 
@@ -216,14 +218,14 @@
 			</div>
 			{#if !(count > searchResults.length || count < 0)}
 				<button
-					class="bg-teal-300 p-4 rounded-md border-4 border-teal-300 prose prose-teal hover:bg-teal-600 focus:bg-teal-600 hover:border-teal-600 focus:border-teal-600"
+					class="bg-slate-300 p-4 rounded-md border-4 border-slate-300 prose prose-invert prose-slate hover:bg-slate-600 focus:bg-slate-600 hover:border-slate-600 focus:border-slate-600"
 					on:click={() => {
 						console.log(count);
 						count += 20;
 					}}>Show More</button
 				>
 				<button
-					class="bg-teal-300 p-4 rounded-md border-4 border-teal-300 prose prose-teal hover:bg-teal-600 focus:bg-teal-600 hover:border-teal-600 focus:border-teal-600"
+					class="bg-slate-300 p-4 rounded-md border-4 border-slate-300 prose prose-invert prose-slate hover:bg-slate-600 focus:bg-slate-600 hover:border-slate-600 focus:border-slate-600"
 					on:click={() => {
 						count += -1 - count;
 						console.log(count);

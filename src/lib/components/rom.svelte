@@ -3,7 +3,7 @@
 	export let title = true;
 </script>
 
-<div class="bg-teal-200 rounded-md border-4 p-4 border-teal-200 prose prose-teal">
+<div class="bg-slate-600 rounded-md border-4 p-4 border-slate-600 prose prose-invert">
 	{#if title} <h2 id={rom.id}>{rom.name}</h2> {/if}
 	<p>{rom.about}</p>
 	<ul>
