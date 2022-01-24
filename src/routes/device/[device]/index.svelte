@@ -26,7 +26,10 @@
 	export let roms: Roms[];
 </script>
 
-<Seo title={`${device.name} | nowrom`} />
+<Seo
+	title={`${device.name} | nowrom`}
+	image={`https://nowrom.deno.dev/img/${device.codename.toLowerCase()}.png`}
+/>
 
 <div class="bg-slate-700 min-h-screen">
 	<div class="flex p-4 gap-3">
