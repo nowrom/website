@@ -1,8 +1,17 @@
 <script context="module">
 	import Rom from '$lib/components/rom.svelte';
+	import Seo from '$lib/components/seo.svelte';
+
 	export async function load({ params, fetch }) {
 		const { device: devicename } = params;
-		const device = await fetch(`/device/${devicename}.json`).then((r) => r.json());
+		const device = await fetch(`https://nowrom.deno.dev/device/${devicename}.json`).then((r) =>
+			r.json()
+		);
+		if (!device.name) {
+			return {
+				status: 404
+			};
+		}
 		return {
 			props: device
 		};
@@ -15,6 +24,8 @@
 
 	export let roms: Roms[];
 </script>
+
+<Seo title={`${device.name} | nowrom`} />
 
 <div class="bg-slate-700 min-h-screen">
 	<div class="flex p-4 gap-3">

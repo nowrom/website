@@ -2,8 +2,8 @@
 	import type { ROMTypes } from '../types';
 	import Fuse from 'fuse.js';
 	import { onMount } from 'svelte';
-	import SvelteSeo from 'svelte-seo';
 	import Rom from '$lib/components/rom.svelte';
+	import Seo from '$lib/components/seo.svelte';
 	export async function load({ params, fetch, session, stuff }) {
 		const data = await fetch('https://nowrom.deno.dev/').then((r) => r.json());
 		const roms = await fetch('https://nowrom.deno.dev/roms').then((r) => r.json());
@@ -55,19 +55,7 @@
 	});
 </script>
 
-<SvelteSeo
-	title="nowrom"
-	description="The easiest way to find a rom to suit your needs"
-	openGraph={{
-		title: 'nowrom',
-		description: 'The easiest way to find a rom to suit your needs',
-		type: 'website'
-	}}
-	twitter={{
-		title: 'nowrom',
-		description: 'The easiest way to find a rom to suit your needs'
-	}}
-/>
+<Seo />
 
 <div class="mx-auto bg-gradient-to-b from-slate-700 to-slate-800">
 	<div class="md:flex">
