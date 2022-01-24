@@ -24,6 +24,8 @@
 	{:else}
 		<h1>{title}</h1>
 	{/if}
+
+	<a href="/">Return back to main page</a>
 	<!-- <p>Here take a frog instead</p>
 	<img src="/frog.jpg" alt="frog" /> -->
 </div>
