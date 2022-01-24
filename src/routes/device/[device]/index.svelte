@@ -7,7 +7,8 @@
 		const device = await fetch(`https://nowrom.deno.dev/device/${devicename}.json`).then((r) =>
 			r.json()
 		);
-		if (!device.name) {
+
+		if (Object.entries(device).length === 0) {
 			return {
 				status: 404
 			};
