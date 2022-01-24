@@ -28,7 +28,7 @@
 
 <Seo
 	title={`${device.name} | nowrom`}
-	image={`https://nowrom.deno.dev/img/${device.codename.toLowerCase()}.png`}
+	image={`https://hdabbjaktgetmyexzjtf.supabase.in/storage/v1/object/public/devices/${device.codename.toLowerCase()}.png`}
 />
 
 <div class="bg-slate-700 min-h-screen">
