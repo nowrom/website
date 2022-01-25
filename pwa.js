@@ -1,7 +1,7 @@
 import { resolveConfig } from 'vite';
 import replace from '@rollup/plugin-replace';
 import { VitePWA } from 'vite-plugin-pwa';
-import { copyFileSync } from 'fs';
+import { copyFileSync, readdirSync, existsSync, statSync } from 'fs';
 import minimist from 'minimist';
 
 const args = minimist(process.argv.slice(2));
@@ -53,6 +53,25 @@ const buildPwa = async () => {
 		}
 		console.log('Generation of PWA complete');
 	}
+	[
+		...readdirSync('./.svelte-kit/output/client/').map((x) => [
+			`./.svelte-kit/output/client/${x}`,
+			x
+		]),
+		...readdirSync('./.svelte-kit/output/server/').map((x) => [
+			`./.svelte-kit/output/server/${x}`,
+			x
+		])
+	]
+		.filter((x) => {
+			statSync(x[0]).isFile();
+		})
+		.forEach((x) => {
+			let filename = x[1];
+			swDestinations.forEach((d) => {
+				copyFileSync(x[0], `${d}${filename}`);
+			});
+		});
 };
 
 buildPwa();
