@@ -4,6 +4,9 @@
 	import { onMount } from 'svelte';
 	import Rom from '$lib/components/rom.svelte';
 	import Seo from '$lib/components/seo.svelte';
+
+	export const router = false;
+
 	export async function load({ params, fetch, session, stuff }) {
 		const data = await fetch('https://nowrom.deno.dev/').then((r) => r.json());
 		const roms = await fetch('https://nowrom.deno.dev/roms').then((r) => r.json());
@@ -50,7 +53,7 @@
 	onMount(() => {
 		let searchParams = new URLSearchParams(window.location.search);
 		toSearch = searchParams.get('search') || '';
-		toSearch = searchParams.get('brand') || '';
+		brand = searchParams.get('brand') || '';
 		updateSearch();
 	});
 </script>
@@ -67,11 +70,12 @@
 					<div class="p-2 rounded-md bg-slate-700 text-white">
 						<strong>nowrom</strong> is a opensource project useful for finding compatible roms for
 						your android device you can view the source code
-						<a href="https://github.com/nowrom/website">here</a>
+						<a rel="noopener" href="https://github.com/nowrom/website">Github Repostory</a>
 					</div>
 					<div class="p-2 rounded-md bg-slate-700">
 						For a the repo that contains all roms etc visit <a
-							href="https://github.com/nowrom/devices">this</a
+							rel="noopener"
+							href="https://github.com/nowrom/devices">Data Repository</a
 						>
 					</div>
 					<div
@@ -81,11 +85,11 @@
 						<ul dir="auto">
 							<li>
 								Telegram
-								<a href="https://t.me/NowromBot" rel="nofollow">@NowromBot</a>
+								<a rel="noopener" href="https://t.me/NowromBot">@NowromBot</a>
 							</li>
 							<li>
 								Matrix
-								<a href="https://matrix.to/#/@nowrom:matrix.org" rel="nofollow"
+								<a href="https://matrix.to/#/@nowrom:matrix.org" rel="noopener"
 									>@nowrom:matrix.org</a
 								>
 							</li>
@@ -93,7 +97,7 @@
 								Discord
 								<a
 									href="https://discord.com/oauth2/authorize?client_id=890656612845518889&amp;permissions=117824&amp;scope=bot%20applications.commands"
-									rel="nofollow">NowRom</a
+									rel="noopener">NowRom</a
 								>
 							</li>
 						</ul>
@@ -135,7 +139,7 @@
 					bind:value={toSearch}
 					on:input={() => {
 						//Theres probably a better way to do this but idk how /shrug
-						if (brand !== '') {
+						if (toSearch !== '') {
 							const searchParams = new URLSearchParams(window.location.search);
 							searchParams.set('search', toSearch);
 							const newLoc = new URL(window.location.toString());
@@ -155,7 +159,7 @@
 					placeholder="Brand"
 					bind:value={brand}
 					on:input={() => {
-						if (toSearch !== '') {
+						if (brand !== '') {
 							const searchParams = new URLSearchParams(window.location.search);
 							searchParams.set('brand', brand);
 							const newLoc = new URL(window.location.toString());
@@ -198,7 +202,7 @@
 								{/each}
 							</p>
 							<div>
-								<a target="_blank" rel="noopener" href={`/device/${rom.codename}`}>View device</a>
+								<a rel="noopener" href={`/device/${rom.codename}`}>View device</a>
 							</div>
 						</div>
 					{/each}

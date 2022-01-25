@@ -1,5 +1,8 @@
 import adapter from '@sveltejs/adapter-cloudflare';
 import preprocess from 'svelte-preprocess';
+import { VitePWA } from 'vite-plugin-pwa';
+import replace from '@rollup/plugin-replace';
+import { pwaConfiguration, replaceOptions } from './pwa-configuration.js';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -9,7 +12,7 @@ const config = {
 
 	kit: {
 		vite: {
-			plugins: []
+			plugins: [VitePWA(pwaConfiguration), replace(replaceOptions)]
 		},
 		adapter: adapter(),
 		// hydrate the <div id="svelte"> element in src/app.html

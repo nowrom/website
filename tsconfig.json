@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"moduleResolution": "node",
 		"module": "es2020",
-		"lib": ["es2020", "DOM"],
+		"lib": ["es2020", "DOM", "WebWorker"],
 		"target": "es2020",
 		/**
 			svelte-preprocess cannot figure out whether you have a value or a type, so tell TypeScript
@@ -12,9 +12,9 @@
 		"isolatedModules": true,
 		"resolveJsonModule": true,
 		/**
-			To have warnings/errors of the Svelte compiler at the correct position,
-			enable source maps by default.
-			*/
+		 * To have warnings/errors of the Svelte compiler at the correct position,
+		 * enable source maps by default.
+		 */
 		"sourceMap": true,
 		"esModuleInterop": true,
 		"skipLibCheck": true,

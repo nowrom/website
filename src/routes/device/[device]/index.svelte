@@ -1,8 +1,13 @@
-<script context="module">
+<script context="module" lang="ts">
 	import Rom from '$lib/components/rom.svelte';
 	import Seo from '$lib/components/seo.svelte';
 
-	export async function load({ params, fetch }) {
+	import type { Handle, Load } from '@sveltejs/kit';
+
+	export const router = false;
+	export const hydrate = false;
+
+	export const load: Load = async ({ params, fetch, session }) => {
 		const { device: devicename } = params;
 		const device = await fetch(`https://nowrom.deno.dev/device/${devicename}.json`).then((r) =>
 			r.json()
@@ -13,10 +18,11 @@
 				status: 404
 			};
 		}
+		device.discord = session.userAgent.toLowerCase().includes('discord');
 		return {
 			props: device
 		};
-	}
+	};
 </script>
 
 <script lang="ts">
@@ -24,11 +30,34 @@
 	export let device: Record<string, string> & { roms: Array<Record<string, string>> };
 
 	export let roms: Roms[];
+	export let discord: boolean;
 </script>
 
+<svelte:head>
+	<meta
+		property="og:description"
+		content="{!discord ? '📚' : ''}codename: {device.codename}
+{!discord ? '🔮' : ''} Brand: {device.brand}
+{!discord ? '🐟' : ''} Custom roms: {device.roms.map((x) => x.id).join(', ')}"
+	/>
+	<meta
+		property="twitter:description"
+		content="{!discord ? '📚' : ''}codename: {device.codename}
+{!discord ? '🔮' : ''} Brand: {device.brand}
+{!discord ? '🐟' : ''} Custom roms: {device.roms.map((x) => x.id).join(', ')}"
+	/>
+	<meta
+		property="description"
+		content="{!discord ? '📚' : ''}codename: {device.codename}
+{!discord ? '🔮' : ''} Brand: {device.brand}
+{!discord ? '🐟' : ''} Custom roms: {device.roms.map((x) => x.id).join(', ')}"
+	/>
+</svelte:head>
 <Seo
 	title={`${device.name} | nowrom`}
 	image={`https://hdabbjaktgetmyexzjtf.supabase.in/storage/v1/object/public/devices/${device.codename.toLowerCase()}.png`}
+	description={null}
+	site_name="Nowrom"
 />
 
 <div class="bg-slate-700 min-h-screen">
@@ -95,70 +124,72 @@
 				</div>
 			</div>
 		</div>
-		<div class="bg-sky-700 p-4 rounded-md border-slate-500 w-full">
-			<div>
-				<h2 class="text-3xl text-slate-200">Roms</h2>
-				<div class="grid gap-2">
-					{#each device.roms as rom (rom.id)}
-						{@const romrom = roms.find((x) => x.id == rom.id)}
+		<div class="w-full">
+			<div class="bg-sky-700 p-4 rounded-md w-full">
+				<div>
+					<h2 class="text-3xl text-slate-200">Roms</h2>
+					<div class="grid gap-2 text-neutral-300">
+						{#each device.roms as rom (rom.id)}
+							{@const romrom = roms.find((x) => x.id == rom.id)}
 
-						<details class="p-2 bg-indigo-500 rounded-md">
-							<summary>
-								<h4 class="text-2xl">
-									{rom.id}
-								</h4>
-								<div>
-									{#if rom.id == 'lineageos'}
-										<p>
-											<a
-												class="text-fuchsia-600 hover:text-fuchsia-700 underline"
-												href={`https://wiki.lineageos.org/devices/${device.codename}/`}
-												>Lineage Wiki page</a
-											>
-										</p>
-									{/if}
-									{#each Object.entries(rom) as [k, v]}
-										{#if k == 'guide'}
+							<details class="p-2 bg-slate-500 rounded-md">
+								<summary>
+									<h4 class="text-2xl">
+										{rom.id}
+									</h4>
+									<div>
+										{#if rom.id == 'lineageos'}
 											<p>
-												<a class="text-fuchsia-600 hover:text-fuchsia-700 underline" href={v}
-													>Guide</a
-												>
-											</p>
-										{:else if k == 'url' || k == 'download'}
-											<p>
-												<a class="text-fuchsia-600 hover:text-fuchsia-700 underline" href={v}
-													>Url/Download</a
-												>
-											</p>
-										{:else if k == 'active'}
-											<p>
-												Active: {v}
-											</p>
-										{:else if k == 'maintainer'}
-											<p>
-												Maintainer: {v}
-											</p>
-										{:else if k == 'group'}
-											<p>
-												<a class="text-fuchsia-600 hover:text-fuchsia-700 underline" href={v}
-													>Group</a
+												<a
+													class="text-fuchsia-600 hover:text-fuchsia-700 underline"
+													href={`https://wiki.lineageos.org/devices/${device.codename}/`}
+													>Lineage Wiki page</a
 												>
 											</p>
 										{/if}
-									{/each}
-								</div>
-							</summary>
-							{#if romrom}
-								<div class="py-2">
-									<Rom rom={romrom} title={false} />
-								</div>
-							{:else}
-								<div>
-									<p>Rom not found!</p>
-								</div>
-							{/if}
-						</details>
-					{/each}
+										{#each Object.entries(rom) as [k, v]}
+											{#if k == 'guide'}
+												<p>
+													<a class="text-fuchsia-600 hover:text-fuchsia-700 underline" href={v}
+														>Guide</a
+													>
+												</p>
+											{:else if k == 'url' || k == 'download'}
+												<p>
+													<a class="text-fuchsia-600 hover:text-fuchsia-700 underline" href={v}
+														>Url/Download</a
+													>
+												</p>
+											{:else if k == 'active'}
+												<p>
+													Active: {v}
+												</p>
+											{:else if k == 'maintainer'}
+												<p>
+													Maintainer: {v}
+												</p>
+											{:else if k == 'group'}
+												<p>
+													<a class="text-fuchsia-600 hover:text-fuchsia-700 underline" href={v}
+														>Group</a
+													>
+												</p>
+											{/if}
+										{/each}
+									</div>
+								</summary>
+								{#if romrom}
+									<div class="py-2">
+										<Rom rom={romrom} title={false} />
+									</div>
+								{:else}
+									<div>
+										<p>Rom not found!</p>
+									</div>
+								{/if}
+							</details>
+						{/each}
+					</div>
 				</div>
 			</div>
 		</div>

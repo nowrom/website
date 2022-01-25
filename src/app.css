@@ -23,5 +23,6 @@
 }
 
 html {
+	@apply bg-gray-700;
 	scrollbar-color: #64748b #1e293b;
 }
