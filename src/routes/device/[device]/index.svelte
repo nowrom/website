@@ -6,7 +6,7 @@
 
 	export const router = false;
 	export const hydrate = false;
-
+	//@ts-ignore -
 	export const load: Load = async ({ params, fetch, session }) => {
 		const { device: devicename } = params;
 		const device = await fetch(`https://nowrom.deno.dev/device/${devicename}.json`).then((r) =>
@@ -18,7 +18,7 @@
 				status: 404
 			};
 		}
-		device.discord = session.userAgent.toLowerCase().includes('discord');
+		device.discord = session.userAgent?.toLowerCase().includes('discord');
 		return {
 			props: device
 		};
@@ -31,26 +31,36 @@
 
 	export let roms: Roms[];
 	export let discord: boolean;
+	const emojis = ['📚', '🔮', '🐟'];
+	const rows = [
+		`Codename: ${device.codename}`,
+		`Brand: ${device.brand}`,
+		`Custom roms: ${device.roms.map((x) => x.id).join(', ')}`
+	];
+	const modiRows = discord ? rows.map((x, index) => `${emojis[index]} ${x}`) : rows;
 </script>
 
 <svelte:head>
 	<meta
 		property="og:description"
-		content="{!discord ? '📚' : ''}codename: {device.codename}
-{!discord ? '🔮' : ''} Brand: {device.brand}
-{!discord ? '🐟' : ''} Custom roms: {device.roms.map((x) => x.id).join(', ')}"
+		content="{modiRows[0]}
+{modiRows[1]}
+{modiRows[2]}
+		"
 	/>
 	<meta
 		property="twitter:description"
-		content="{!discord ? '📚' : ''}codename: {device.codename}
-{!discord ? '🔮' : ''} Brand: {device.brand}
-{!discord ? '🐟' : ''} Custom roms: {device.roms.map((x) => x.id).join(', ')}"
+		content="{modiRows[0]}
+{modiRows[1]}
+{modiRows[2]}
+		"
 	/>
 	<meta
 		property="description"
-		content="{!discord ? '📚' : ''}codename: {device.codename}
-{!discord ? '🔮' : ''} Brand: {device.brand}
-{!discord ? '🐟' : ''} Custom roms: {device.roms.map((x) => x.id).join(', ')}"
+		content="{modiRows[0]}
+{modiRows[1]}
+{modiRows[2]}
+		"
 	/>
 </svelte:head>
 <Seo
@@ -60,7 +70,7 @@
 	site_name="Nowrom"
 />
 
-<div class="bg-slate-700 min-h-screen">
+<div class="bg-slate-700 min-h-screen mb-10">
 	<div class="flex p-4 gap-3">
 		<h1 class="text-slate-200 text-4xl">{device.name}</h1>
 		<h4 class="text-slate-300 text-xl">{device.codename}</h4>
@@ -69,10 +79,10 @@
 		<div>
 			<div class="grid gap-2">
 				<div class="bg-sky-800 p-4 rounded-md border-sky-800 h-auto md:w-96 text-stone-300">
-					<table class="relative">
-						<tr class="text-3xl">
-							<th class="m-auto">Device Info</th>
-						</tr>
+					<div class="text-3xl text-center">
+						<th class="m-auto">Device Info</th>
+					</div>
+					<table class="relative w-full">
 						<tr>
 							<td>
 								<p>Brand</p>
@@ -89,26 +99,21 @@
 								<p>{device.codename}</p>
 							</td>
 						</tr>
-						{#each device.roms as rom}
-							{#if rom.id == 'lineageos'}
-								<tr>
+					</table>
+					<table class="relative">
+						{#if device.specs}
+							<!-- {@const specs = Object.entries(device.specs)} -->
+							{#each Object.entries(device.specs) as [k, v]}
+								<tr class="bg-slate-600 my-1 p-2 flex flex-col">
 									<td>
-										<p>Ram</p>
+										<p class="text-xl">{k}</p>
 									</td>
 									<td>
-										<p>{rom.ram}</p>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<p>Cpu</p>
-									</td>
-									<td>
-										<p>{rom.cpu}</p>
+										<p>{v}</p>
 									</td>
 								</tr>
-							{/if}
-						{/each}
+							{/each}
+						{/if}
 						<tr class="flex justify-center">
 							<td class="flex justify-center">
 								<img

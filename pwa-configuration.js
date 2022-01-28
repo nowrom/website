@@ -43,6 +43,7 @@ const claims = process.env.CLAIMS === 'true';
 const reload = process.env.RELOAD_SW === 'true';
 const sw = true;
 const replaceOptions = {
+	preventAssignment: true,
 	__DATE__: new Date().toISOString(),
 	__RELOAD_SW__: reload ? 'true' : 'false'
 };

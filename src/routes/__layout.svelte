@@ -1,8 +1,23 @@
 <script>
 	import '../app.css';
+	import { browser, dev } from '$app/env';
+	import { onMount } from 'svelte';
+
+	let ReloadPrompt;
+	onMount(async () => {
+		!dev &&
+			browser &&
+			(ReloadPrompt = (await import('$lib/components/ReloadPrompt.svelte')).default);
+	});
 </script>
 
 <slot />
+
+<svelte:head>
+	{#if !dev && browser}
+		<link rel="manifest" href="/_app/manifest.webmanifest" />
+	{/if}
+</svelte:head>
 
 <div class="bg-gray-800">
 	<hr class="bg-gray-900 outline-gray-800 border-gray-700" />
@@ -18,3 +33,7 @@
 		</li>
 	</ul>
 </div>
+
+{#if ReloadPrompt}
+	<svelte:component this={ReloadPrompt} />
+{/if}
