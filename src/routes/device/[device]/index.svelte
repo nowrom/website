@@ -100,7 +100,7 @@
 							</td>
 						</tr>
 					</table>
-					<table class="relative">
+					<table class="relative w-full">
 						{#if device.specs}
 							<!-- {@const specs = Object.entries(device.specs)} -->
 							{#each Object.entries(device.specs) as [k, v]}
@@ -114,15 +114,10 @@
 								</tr>
 							{/each}
 						{/if}
-						<tr class="flex justify-center">
-							<td class="flex justify-center">
-								<img
-									src={`https://nowrom.deno.dev/img/${device.codename.toLowerCase()}.png`}
-									alt=""
-								/>
-							</td>
-						</tr>
 					</table>
+					<div class="flex justify-center w-full">
+						<img src={`https://nowrom.deno.dev/img/${device.codename.toLowerCase()}.png`} alt="" />
+					</div>
 				</div>
 				<div class="bg-sky-800 p-4 rounded-md border-sky-800 h-auto text-stone-300">
 					<a href="/" class="hover:text-fuchsia-700"> Back to search </a>

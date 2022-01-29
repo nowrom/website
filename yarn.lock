@@ -1047,17 +1047,17 @@
     magic-string "^0.25.0"
     string.prototype.matchall "^4.0.6"
 
-"@sveltejs/adapter-cloudflare@^1.0.0-next.7":
+"@sveltejs/adapter-cloudflare@next":
   version "1.0.0-next.9"
   resolved "https://registry.yarnpkg.com/@sveltejs/adapter-cloudflare/-/adapter-cloudflare-1.0.0-next.9.tgz#da2474151a9ce6946bfc817b4ced5f347871d848"
   integrity sha512-xoPbFinqFbzphVf4rjGqU/6CC/QciXtXpBn6+hp4mChjX/9X5c/fxjkVGHPdpq6moTIfaZiMU/EUKtbBvyTBUw==
   dependencies:
     esbuild "^0.13.15"
 
-"@sveltejs/kit@^1.0.0-next.206":
-  version "1.0.0-next.249"
-  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.0.0-next.249.tgz#cd8c33397939e67fc63610b2b9a9924bed90325b"
-  integrity sha512-YzMEgq4lLfGdljZbUwR5TCSN53f77WAtruEWKVeMK+mIYPsSVMksqyPt2/dZ07/duSWSBS7rxcOnfO3L+lXp+A==
+"@sveltejs/kit@^1.0.0-next.250":
+  version "1.0.0-next.250"
+  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.0.0-next.250.tgz#6fcde9b56f187e6118b2dc692143e71b3245abcc"
+  integrity sha512-8Ctaqgb+pdws06gfKDy+DfEIq3epbhQnRrdavVrG2rv+lr/qAqz788OX4RlriBliNBFPkpIPYy4ldLJ7yoAmyg==
   dependencies:
     "@sveltejs/vite-plugin-svelte" "^1.0.0-next.32"
     sade "^1.7.4"
