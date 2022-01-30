@@ -38,29 +38,42 @@
 		`Custom roms: ${device.roms.map((x) => x.id).join(', ')}`
 	];
 	const modiRows = discord ? rows.map((x, index) => `${emojis[index]} ${x}`) : rows;
+	const renames = {
+		cpu: 'CPU',
+		weight: 'Weight',
+		year: 'Year',
+		os: 'OS',
+		chipset: 'Chipset',
+		gpu: 'GPU',
+		sensors: 'Sensors',
+		batlife: 'Battery',
+		internalmemory: 'Memory'
+	};
+	//@ts-ignore -
+	if (device.specs && device.specs.gpu !== 'Not found') {
+		//@ts-ignore -
+		const specs: Record<string, string> = device.specs;
+
+		modiRows.push('');
+		modiRows.push(...Object.entries(specs).map(([x, y]) => `${renames[x]}: ${y}`));
+	}
 </script>
 
 <svelte:head>
 	<meta
 		property="og:description"
-		content="{modiRows[0]}
-{modiRows[1]}
-{modiRows[2]}
-		"
+		content="{modiRows.join(`
+			`)} "
 	/>
 	<meta
 		property="twitter:description"
-		content="{modiRows[0]}
-{modiRows[1]}
-{modiRows[2]}
-		"
+		content="{modiRows.join(`
+			`)} "
 	/>
 	<meta
 		property="description"
-		content="{modiRows[0]}
-{modiRows[1]}
-{modiRows[2]}
-		"
+		content="{modiRows.join(`
+			`)} "
 	/>
 </svelte:head>
 <Seo
@@ -106,7 +119,7 @@
 							{#each Object.entries(device.specs) as [k, v]}
 								<tr class="bg-slate-600 my-1 p-2 flex flex-col">
 									<td>
-										<p class="text-xl">{k}</p>
+										<p class="text-xl">{renames[k]}</p>
 									</td>
 									<td>
 										<p>{v}</p>
