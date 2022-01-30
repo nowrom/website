@@ -62,18 +62,24 @@
 <svelte:head>
 	<meta
 		property="og:description"
-		content="{modiRows.join(`
-			`)} "
+		content="{modiRows.join(
+			`
+`
+		)} "
 	/>
 	<meta
 		property="twitter:description"
-		content="{modiRows.join(`
-			`)} "
+		content="{modiRows.join(
+			`
+`
+		)} "
 	/>
 	<meta
 		property="description"
-		content="{modiRows.join(`
-			`)} "
+		content="{modiRows.join(
+			`
+`
+		)} "
 	/>
 </svelte:head>
 <Seo
