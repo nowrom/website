@@ -60,7 +60,7 @@
 
 <Seo />
 
-<div class="mx-auto bg-gradient-to-b from-slate-700 to-slate-800">
+<div class="mx-auto bg-gradient-to-b from-green-900 to-slate-500">
 	<div class="md:flex">
 		<div class="md:p-0 p-4">
 			<div class="flex flex-col gap-2 py-4 text-white md:px-2">
@@ -187,7 +187,7 @@
 					{#each count !== -1 ? [...searchResults].slice(0, count) : searchResults as rom, index (rom.codename)}
 						<div
 							id={rom.codename}
-							class="text-white bg-slate-400 p-4 rounded-md border-4 border-slate-400 prose prose-invert flex flex-col"
+							class="text-white bg-cyan-800 p-4 rounded-md border-4 border-cyan-500 prose prose-invert flex flex-col"
 						>
 							<h3>{rom.name || 'Unknown'}</h3>
 							<p class="text-zinc-200">
