@@ -90,8 +90,9 @@
 	keywords={`rom, customrom, find, phone, android, ${device.name}, ${device.codename}, ${device.roms
 		.map((rom) => {
 			let r = roms.find((x) => x.id == rom.id);
-			return r.name;
+			return r?.name;
 		})
+		.filter((x) => x)
 		.join(', ')}`}
 />
 
@@ -157,8 +158,9 @@
 						Custom roms for the <strong class="text-green-400">{device.name}</strong>: {device.roms
 							.map((rom) => {
 								let r = roms.find((x) => x.id == rom.id);
-								return r.name;
+								return r?.name;
 							})
+							.filter((x) => x)
 							.join(', ')}.<br />
 						You can view the list down below to download these roms and find more information about them.
 						<br />
