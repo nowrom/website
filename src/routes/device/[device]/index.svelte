@@ -87,6 +87,12 @@
 	image={`https://hdabbjaktgetmyexzjtf.supabase.in/storage/v1/object/public/devices/${device.codename.toLowerCase()}.png`}
 	description={null}
 	site_name="Nowrom"
+	keywords={`rom, customrom, find, phone, android, ${device.name}, ${device.codename}, ${device.roms
+		.map((rom) => {
+			let r = roms.find((x) => x.id == rom.id);
+			return r.name;
+		})
+		.join(', ')}`}
 />
 
 <div class="bg-slate-700 min-h-screen mb-10">
@@ -147,6 +153,17 @@
 			<div class="bg-sky-700 p-4 rounded-md w-full">
 				<div>
 					<h2 class="text-3xl text-slate-200">Roms</h2>
+					<p class="text-white">
+						Custom roms for the <strong class="text-green-400">{device.name}</strong>: {device.roms
+							.map((rom) => {
+								let r = roms.find((x) => x.id == rom.id);
+								return r.name;
+							})
+							.join(', ')}.<br />
+						You can view the list down below to download these roms and find more information about them.
+						<br />
+						<a href="/" class="hover:text-fuchsia-700 text-blue-400"> Back to search </a>
+					</p>
 					<div class="grid gap-2 text-neutral-300">
 						{#each device.roms as rom (rom.id)}
 							{@const romrom = roms.find((x) => x.id == rom.id)}

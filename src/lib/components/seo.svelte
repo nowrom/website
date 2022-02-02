@@ -4,6 +4,7 @@
 	export let title = 'nowrom';
 	export let image: undefined | string = undefined;
 	export let description = 'The easiest way to find a rom to suit your needs';
+	export let keywords = 'rom, customrom, find, phone, android';
 	export let site_name = undefined;
 </script>
 
@@ -14,6 +15,7 @@
 <SvelteSeo
 	{title}
 	{description}
+	{keywords}
 	openGraph={{
 		title: title,
 		description: description,
