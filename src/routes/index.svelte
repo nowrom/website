@@ -196,11 +196,21 @@
 
 								Codename: {rom.codename || 'Unknown'}
 							</p>
-							<p class="text-sm flex-grow">
-								Supported roms: {#each rom.roms as rom}
-									<a href={`#${rom.id}`}>{rom.id}</a>,{' '}
-								{/each}
-							</p>
+							{#if rom.roms.length !== 0}
+								<p class="text-sm flex-grow">
+									roms: {#each rom.roms as rom}
+										<a href={`#${rom.id}`}>{rom.id}</a>,{' '}
+									{/each}
+								</p>
+							{/if}
+							{#if rom.recoveries.length !== 0}
+								<p class="text-sm flex-grow">
+									recoveries: {#each rom.recoveries as recovery}
+										{recovery.id}{' '}
+										<!-- <a href={`#${rom.id}`}>{recovery.id}</a>,{' '} -->
+									{/each}
+								</p>
+							{/if}
 							<div>
 								<a rel="noopener" href={`/device/${rom.codename}`}>View device</a>
 							</div>

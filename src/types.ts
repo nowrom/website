@@ -1,5 +1,6 @@
 export interface ROMTypes {
 	roms: ROM[];
+	recoveries: ROM[];
 	brand: string;
 	name: string;
 	codename: string;

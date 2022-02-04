@@ -27,16 +27,21 @@
 
 <script lang="ts">
 	type Roms = Record<string, string>;
-	export let device: Record<string, string> & { roms: Array<Record<string, string>> };
+	export let device: Record<string, string> & {
+		roms: Array<Record<string, string>>;
+		recoveries: Array<Record<string, string>>;
+	};
 
 	export let roms: Roms[];
 	export let discord: boolean;
-	const emojis = ['📚', '🔮', '🐟'];
-	const rows = [
-		`Codename: ${device.codename}`,
-		`Brand: ${device.brand}`,
-		`Custom roms: ${device.roms.map((x) => x.id).join(', ')}`
-	];
+	const emojis = ['📚', '🔮', '🐟', '📱'];
+	const rows = [`Codename: ${device.codename}`, `Brand: ${device.brand}`];
+	if (device.roms.length !== 0) {
+		rows.push(`Custom roms: ${device.roms.map((x) => x.id).join(', ')}`);
+	}
+	if (device.recoveries) {
+		rows.push(`Recoveries: ${device.recoveries.map((x) => x.id).join(', ')}`);
+	}
 	const modiRows = discord ? rows.map((x, index) => `${emojis[index]} ${x}`) : rows;
 	const renames = {
 		cpu: 'CPU',
@@ -145,12 +150,12 @@
 						<img src={`https://nowrom.deno.dev/img/${device.codename.toLowerCase()}.png`} alt="" />
 					</div>
 				</div>
-				<div class="bg-sky-800 p-4 rounded-md border-sky-800 h-auto text-stone-300">
+				<div class="bg-sky-800 p-4 rounded-md border-sky-800 h-auto text-stone-300 md:w-96">
 					<a href="/" class="hover:text-fuchsia-700"> Back to search </a>
 				</div>
 			</div>
 		</div>
-		<div class="w-full">
+		<div class="w-full flex flex-col gap-2">
 			<div class="bg-sky-700 p-4 rounded-md w-full">
 				<div>
 					<h2 class="text-3xl text-slate-200">Roms</h2>
@@ -229,6 +234,23 @@
 						{/each}
 					</div>
 				</div>
+			</div>
+			<div class="bg-sky-700 p-4 rounded-md w-full grid gap-2 text-neutral-300">
+				<h2 class="text-3xl text-slate-200">Recoveries</h2>
+				<p>
+					Recoveries that officially support the {device.name} if theres no official recovery for the
+					{device.name} then you should search for it.
+				</p>
+				{#each device.recoveries as recovery}
+					<div class="p-2 bg-slate-500 rounded-md">
+						{recovery.id}
+					</div>
+				{/each}
+				{#if device.recoveries.length == 0}
+					<div class="p-2 bg-slate-500 rounded-md">
+						Device doesnt have offecialy suported recoveries
+					</div>
+				{/if}
 			</div>
 		</div>
 	</div>
