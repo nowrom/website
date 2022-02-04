@@ -46,6 +46,7 @@ const render = (
 
 
 ${devices
+	.filter((x) => !x.codename.includes('&'))
 	.map(
 		(device) => `
   <url>
