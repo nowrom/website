@@ -199,14 +199,14 @@
 							{#if rom.roms.length !== 0}
 								<p class="text-sm flex-grow">
 									roms: {#each rom.roms as rom}
-										<a href={`#${rom.id}`}>{rom.id}</a>,{' '}
+										<a href={`#${rom}`}>{rom}</a>,{' '}
 									{/each}
 								</p>
 							{/if}
 							{#if rom.recoveries.length !== 0}
 								<p class="text-sm flex-grow">
 									recoveries: {#each rom.recoveries as recovery}
-										{recovery.id}{' '}
+										{recovery}{' '}
 										<!-- <a href={`#${rom.id}`}>{recovery.id}</a>,{' '} -->
 									{/each}
 								</p>
