@@ -60,7 +60,7 @@
 
 <Seo />
 
-<div class="mx-auto bg-gradient-to-b from-green-900 to-slate-500">
+<div class="mx-auto bg-gradient-to-b from-teal-500 to-slate-500">
 	<div class="md:flex">
 		<div class="md:p-0 p-4">
 			<div class="flex flex-col gap-2 py-4 text-white md:px-2">
