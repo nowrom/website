@@ -1,8 +1,11 @@
 <script context="module" lang="ts">
+	import { page } from '$app/stores';
+
 	import Rom from '$lib/components/rom.svelte';
 	import Seo from '$lib/components/seo.svelte';
 
 	import type { Handle, Load } from '@sveltejs/kit';
+	import { onMount } from 'svelte';
 
 	export const router = false;
 	export const hydrate = false;
@@ -26,6 +29,8 @@
 </script>
 
 <script lang="ts">
+	// import { page } from '$app/stores';
+
 	type Roms = Record<string, string>;
 	export let device: Record<string, string> & {
 		roms: Array<Record<string, string>>;
@@ -62,6 +67,14 @@
 		modiRows.push('');
 		modiRows.push(...Object.entries(specs).map(([x, y]) => `${renames[x]}: ${y}`));
 	}
+	$: canshare = false;
+	onMount(() => {
+		canshare = navigator.canShare?.({
+			url: $page.url.toString(),
+			title: `${device.name} | nowrom`,
+			text: 'Find the rom for your needs with nowrom!'
+		});
+	});
 </script>
 
 <svelte:head>
@@ -150,6 +163,18 @@
 						<img src={`https://nowrom.deno.dev/img/${device.codename.toLowerCase()}.png`} alt="" />
 					</div>
 				</div>
+				{#if canshare}
+					<button
+						class="bg-slate-300 p-4 rounded-md border-4 border-slate-300 hover:bg-slate-600 focus:bg-slate-600 hover:border-slate-600 focus:border-slate-600"
+						on:click={() => {
+							navigator.share({
+								url: $page.url.toString(),
+								title: `${device.name} | nowrom`,
+								text: 'Find the rom for your needs with nowrom!'
+							});
+						}}>Share Link</button
+					>
+				{/if}
 				<div class="bg-sky-800 p-4 rounded-md border-sky-800 h-auto text-stone-300 md:w-96">
 					<a href="/" class="hover:text-fuchsia-700"> Back to search </a>
 				</div>
