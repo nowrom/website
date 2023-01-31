@@ -1,0 +1,71 @@
+---
+import Device from "../../components/device.svelte";
+import Layout from "../../layouts/Layout.astro";
+
+// export const prerender = true;
+
+// export async function getStaticPaths() {
+//     let data = await fetch("https://nowrom.deno.dev/").then((r) => r.json());
+//     return data.map((x) => ({
+//         params: { device: x.codename },
+//     }));
+// }
+
+const { device: devicename } = Astro.params;
+const { device, roms } = await fetch(
+    `https://nowrom.deno.dev/device/${devicename}.json`
+).then((r) => r.json());
+
+if (Object.entries(device).length === 0) {
+    return new Response(null, {
+        status: 404,
+        statusText: "not found",
+    });
+}
+
+const rows = [`📚 Codename: ${device.codename}`, `🔮 Brand: ${device.brand}`];
+if (device.roms.length !== 0) {
+    rows.push(`🐟 Custom roms: ${device.roms.map((x: { id: any; }) => x.id).join(", ")}`);
+}
+if (device.recoveries) {
+    rows.push(
+        `📱 Recoveries: ${device.recoveries.map((x: { id: any; }) => x.id).join(", ")}`
+    );
+}
+const renames = {
+    cpu: "CPU",
+    weight: "Weight",
+    year: "Year",
+    os: "OS",
+    chipset: "Chipset",
+    gpu: "GPU",
+    sensors: "Sensors",
+    batlife: "Battery",
+    internalmemory: "Memory",
+} as Record<string,string>;
+//@ts-ignore -
+if (device.specs && device.specs.gpu !== "Not found") {
+    //@ts-ignore -
+    const specs: Record<string, string> = device.specs;
+    rows.push("");
+    rows.push(...Object.entries(specs).map(([x, y]) => `${renames[x]}: ${y}`));
+}
+---
+
+<Layout
+    article={true}
+    title={`${device.name} | Nowrom`}
+    image={`https://hdabbjaktgetmyexzjtf.supabase.in/storage/v1/object/public/devices/${device.codename.toLowerCase()}.png`}
+    description={rows.join("\n")}
+    keywords={`rom, customrom, find, phone, android, ${device.name}, ${
+        device.codename
+    }, ${device.roms
+        .map((rom: { id: any; }) => {
+            let r = roms.find((x: { id: string; }) => x.id == rom.id);
+            return r?.name;
+        })
+        .filter((x: any) => x)
+        .join(", ")}`}
+>
+    <Device device={device} roms={roms} />
+</Layout>

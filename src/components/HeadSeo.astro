@@ -1,0 +1,31 @@
+---
+type Props = { canonicalUrl: URL; title:string, description:string, image?:string, keywords?:string, article?:boolean };
+
+const { title, description, canonicalUrl, image,keywords,article } =
+  Astro.props;
+
+---
+
+<!-- Page Metadata -->
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- OpenGraph Tags -->
+<meta property="og:title" content={title} />
+<meta property="og:type" content={article ? "article" : "website"} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:locale" content={"en-US"} />
+<meta
+  name="description"
+  property="og:description"
+  content={description ?? "Nowrom is the best way to find new roms for your device!"}
+/>
+<meta property="og:site_name" content={"Nowrom"} />
+{image && <meta name="og:image" content={image} />}
+{keywords && <meta property="og:keywords" content={keywords} />}
+
+<!-- Twitter Tags -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content={"@TrickedDev"} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description ?? "Nowrom is the best way to find new roms for your device!"} />
+{image && <meta name="twitter:image" content={image} />}

@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Index from '../components/index.svelte';
+
+const data = await fetch('https://nowrom.deno.dev/').then((r) => r.json());
+const roms = await fetch('https://nowrom.deno.dev/roms').then((r) => r.json());
+---
+
+<Layout title="Nowrom">
+
+	<main>
+		<Index client:load devices={data} roms={roms} />
+	</main>
+</Layout>
+

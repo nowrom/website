@@ -1,4 +1,5 @@
-export async function get({ url }) {
+export async function get() {
+    let url = "https://nowrom.pages.dev"
 	const headers = {
 		'Cache-Control': `max-age=0, s-max-age=${600}`,
 		'Content-Type': 'application/xml'
@@ -9,9 +10,9 @@ export async function get({ url }) {
   <ShortName>the easiest way to find a rom for your device</ShortName>
   <Description>Nowrom the easiest way to find a rom for your device</Description>
   <InputEncoding>UTF-8</InputEncoding>
-  <Image width="16" height="16"  type="image/png">${url.origin}/nowrom.png</Image>
-<Url type="text/html" method="get" template="${url.origin}?search={searchTerms}"/>
-  <moz:SearchForm>${url.origin}</moz:SearchForm>
+  <Image width="16" height="16"  type="image/png">${url}/nowrom.png</Image>
+<Url type="text/html" method="get" template="${url}?search={searchTerms}"/>
+  <moz:SearchForm>${url}</moz:SearchForm>
 </OpenSearchDescription>`,
 		headers
 	};

@@ -1,12 +1,16 @@
-const typography = require('@tailwindcss/typography');
-const config = {
-	content: ['./src/**/*.{html,js,svelte,ts}'],
+/** @type {import('tailwindcss').Config} */
+const daisyui = require('daisyui')
 
+module.exports = {
+	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
 	theme: {
-		extend: {}
+		extend: {},
 	},
-
-	plugins: [typography]
-};
-
-module.exports = config;
+	plugins: [
+		daisyui,
+	],
+	daisyui: {
+		logs: false,
+		themes: ["night"]
+	}
+}

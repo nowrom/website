@@ -1,20 +1,9 @@
-export async function get({ url }) {
-	const staticPages = Object.keys(import.meta.glob('/src/routes/**/!(_)*.svelte'))
-		.filter((page) => {
-			const filters: Array<string> = ['device]', '_', 'private', '/src/routes/index.svelte'];
-
-			return !filters.find((filter) => page.includes(filter));
-		})
-		.map((page) => {
-			return page
-				.replace('/src/routes', url.origin)
-				.replace('/index.svelte', '')
-				.replace('.svelte', '');
-		});
+export async function get() {
+	
 
 	const devices = await fetch('https://nowrom.deno.dev/').then((r) => r.json());
 
-	const body = render(staticPages, devices, url);
+	const body = render(["/", "/about", "/roms"], devices);
 
 	const headers = {
 		'Cache-Control': `max-age=0, s-max-age=${600}`,
@@ -30,7 +19,6 @@ export async function get({ url }) {
 const render = (
 	staticPages: Array<string>,
 	devices: { name: string; brand: string; codename: string }[],
-	url
 ) => `<?xml version="1.0" encoding="UTF-8" ?>
 <urlset
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -50,7 +38,7 @@ ${devices
 	.map(
 		(device) => `
   <url>
-    <loc>${url.origin}/device/${device.codename}</loc>
+    <loc>https://nowrom.pages.dev/device/${device.codename}</loc>
     <changefreq>daily</changefreq>
 	<priority>0.80</priority>
   </url>
