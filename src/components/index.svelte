@@ -1,13 +1,7 @@
-<script lang="ts" context="module">
+<script lang="ts">
   import type { ROMTypes } from "../types";
   import Fuse from "fuse.js";
   import { onMount } from "svelte";
-  import Rom from "./rom.svelte";
-
-  export const router = false;
-</script>
-
-<script lang="ts">
   export let devices: ROMTypes[];
   export let roms = [];
   let searchResults = [...devices];

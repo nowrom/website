@@ -12,4 +12,9 @@ export default defineConfig({
   integrations: [tailwind(), prefetch(), svelte()],
   output: "server",
   adapter: cloudflare(),
+  vite: {
+    ssr: {
+      target: "node",
+    },
+  },
 });
